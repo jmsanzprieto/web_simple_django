@@ -1,12 +1,10 @@
 # en principal/views.py
-
 from django.shortcuts import render
 
-## Metodo para llamar a la página principal
 def pagina_principal(request):
-    return render(request, 'principal/pagina_principal.html')
+    context = {'titulo_pagina': 'Inicio','contenido_pagina':'Esto es lo que se vería dentro de la página de inicio'}
+    return render(request, 'principal/pagina.html', context)
 
-## Metodo para llamar a la página de contacto
 def pagina_contacto(request):
-    return render(request, 'principal/pagina_contacto.html')
-
+    context = {'titulo_pagina': 'Contacto','contenido_pagina':'Esto es lo que se vería en la página de contacto: formularios, botones, etc.'}
+    return render(request, 'principal/pagina.html', context)
