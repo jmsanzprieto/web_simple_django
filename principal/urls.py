@@ -1,9 +1,7 @@
 # en principal/urls.py
-
 from django.urls import path
-from . import views
+from .views import mostrar_pagina
 
 urlpatterns = [
-    path('', views.pagina_principal, name='pagina_principal'),
-    path('contacto/', views.pagina_contacto, name='pagina_contacto'),
+    path('<str:nombre_pagina>/', mostrar_pagina, name='mostrar_pagina'),
 ]
