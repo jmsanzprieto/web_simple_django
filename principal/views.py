@@ -15,4 +15,4 @@ def obtener_contenido(nombre_pagina):
     }
 
     # Devuelve el contenido de la página correspondiente o un mensaje de error si no existe
-    return paginas.get(nombre_pagina, 'Página no encontrada')
+    return paginas.get(nombre_pagina, 'Error 404: Página no encontrada')
