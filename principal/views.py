@@ -1,18 +1,22 @@
-# en principal/views.py
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from .models import Pagina
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 def mostrar_pagina(request, nombre_pagina):
-    contenido = obtener_contenido(nombre_pagina)
-    context = {'titulo_pagina': nombre_pagina.capitalize(), 'contenido_pagina': contenido}
-    return render(request, 'principal/pagina.html', context)
+    # Convertir nombre_pagina a minúsculas
+    nombre_pagina = nombre_pagina.lower()
 
-def obtener_contenido(nombre_pagina):
-    # Puedes agregar más páginas y su contenido aquí según sea necesario
-    paginas = {
-        'inicio': 'Esto es lo que se vería dentro de la página de inicio',
-        'contacto': 'Esto es lo que se vería en la página de contacto: formularios, botones, etc.',
-        # Agrega más páginas según sea necesario
-    }
+    try:
+        # Intentar obtener una instancia de Pagina
+        pagina = get_object_or_404(Pagina, nombre=nombre_pagina)
 
-    # Devuelve el contenido de la página correspondiente o un mensaje de error si no existe
-    return paginas.get(nombre_pagina, 'Error 404: Página no encontrada')
+        # Crear un contexto con el nombre de la página y el contenido de la página
+        context = {'titulo_pagina': pagina.nombre.capitalize(), 'contenido_pagina': pagina.contenido}
+
+        # Renderizar la plantilla 'pagina.html' con el contexto proporcionado
+        return render(request, 'principal/pagina.html', context)
+    except:
+        # Si no se encuentra la página, redirigir a la página con nombre "error"
+        return HttpResponseRedirect(reverse('mostrar_pagina', args=['error']))
+
